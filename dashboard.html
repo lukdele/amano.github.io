@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✧･ﾟ Mon dashboard ﾟ･✧ | CHIBI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#d9c2ff;
+    --purple:#a988e8;
+    --blue:#c9b6ff;
+    --cyan:#e0d0ff;
+    --yellow:#f3e6ff;
+    --hotpink:#9b6bd6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Montserrat',sans-serif;
+    background:
+      radial-gradient(circle at 20% 20%, #ecdcff 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #ddd0ff 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #e6d9ff 0%, transparent 50%),
+      linear-gradient(135deg, #e4d6ff 0%, #ecdcff 40%, #f2e8ff 70%, #ded0f7 100%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+    position:relative;
+    padding-bottom:80px;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 1s ease;
+    background:
+      radial-gradient(circle at 20% 20%, #2a3568 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #1f2a5c 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #232f66 0%, transparent 50%),
+      linear-gradient(135deg, #131a3a 0%, #1a2350 40%, #202b5e 70%, #161d42 100%);
+  }
+  body.dark::after{ opacity:1; }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g fill='white'><path d='M20 4 L23 15 L34 15 L25 22 L28 33 L20 26 L12 33 L15 22 L6 15 L17 15 Z'/><circle cx='90' cy='30' r='2.2'/><circle cx='60' cy='70' r='1.6'/><path d='M110 90 L112 96 L118 96 L113 100 L115 106 L110 102 L105 106 L107 100 L102 96 L108 96 Z'/><circle cx='25' cy='110' r='1.8'/><circle cx='75' cy='120' r='2.4'/><circle cx='130' cy='60' r='1.5'/></g></svg>");
+    background-size:140px 140px;
+    background-repeat:repeat;
+    opacity:.55;
+    animation:drift 40s linear infinite;
+  }
+  @keyframes drift{
+    0%{background-position:0 0; opacity:.4;}
+    50%{opacity:.65;}
+    100%{background-position:-280px 280px; opacity:.4;}
+  }
+
+  .sparkle{
+    position:fixed;
+    pointer-events:none;
+    font-size:28px;
+    color:#ffffff;
+    opacity:.9;
+    animation:float 6s ease-in-out infinite;
+    z-index:0;
+    filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px rgba(255,255,255,.7));
+    user-select:none;
+  }
+  @keyframes float{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    25%{transform:translate(10px,-18px) rotate(10deg);}
+    50%{transform:translate(-6px,-28px) rotate(-8deg);}
+    75%{transform:translate(-14px,-12px) rotate(6deg);}
+  }
+
+  .marquee-wrap{
+    width:100%;
+    background:linear-gradient(90deg,var(--hotpink),var(--purple),var(--pink),var(--hotpink));
+    background-size:300% 100%;
+    animation:gradientshift 6s linear infinite;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:4px solid #fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    position:relative;
+    z-index:2;
+  }
+  @keyframes gradientshift{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
+  }
+  .marquee{
+    display:inline-block;
+    padding:8px 0;
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:1px;
+    text-shadow:0 0 6px rgba(255,255,255,.8), 2px 2px 0 rgba(0,0,0,.15);
+    animation:scroll 18s linear infinite;
+  }
+  @keyframes scroll{
+    0%{transform:translateX(100vw);}
+    100%{transform:translateX(-100%);}
+  }
+
+  .topbar{
+    max-width:700px;
+    margin:0 auto;
+    padding:14px 20px 0;
+    position:relative;
+    z-index:2;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .backlink{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:#7d5cc7;
+    text-decoration:none;
+    background:rgba(255,255,255,.65);
+    padding:7px 14px;
+    border-radius:20px;
+    box-shadow:0 2px 8px rgba(140,90,200,.2);
+    transition:color .7s ease, background .7s ease, transform .15s ease;
+  }
+  .backlink:hover{ transform:translateY(-1px); }
+  body.dark .backlink{ color:#c7d2f5; background:rgba(28,36,82,.6); }
+
+  main{
+    max-width:700px;
+    margin:0 auto;
+    padding:22px 20px 40px;
+    position:relative;
+    z-index:2;
+  }
+
+  h1.pagetitle{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:26px;
+    color:#5a2d82;
+    margin:10px 0 4px;
+    transition:color .7s ease;
+  }
+  body.dark h1.pagetitle{ color:#dbe2ff; }
+  p.subtext{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#7a5aa8;
+    margin:0 0 24px;
+    transition:color .7s ease;
+  }
+  body.dark p.subtext{ color:#b7c3f5; }
+
+  .card-box{
+    background:rgba(255,255,255,.75);
+    border:3px solid #fff;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:24px;
+    box-shadow:0 8px 20px rgba(140,90,200,.18);
+    transition:background .7s ease, border-color .7s ease;
+  }
+  body.dark .card-box{ background:rgba(28,36,82,.55); border-color:rgba(255,255,255,.15); }
+
+  .card-box h2{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:#5a2d82;
+    margin:0 0 14px;
+    transition:color .7s ease;
+  }
+  body.dark .card-box h2{ color:#dbe2ff; }
+
+  .mini-profile{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:6px;
+  }
+  .mini-avatar{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    padding:3px;
+    background:conic-gradient(from 210deg, #ffd76b, var(--hotpink), var(--purple), var(--pink), #ffd76b);
+    flex-shrink:0;
+  }
+  .mini-avatar-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  body.dark .mini-avatar-inner{ background:#1c2452; }
+  .mini-avatar-inner img{ width:80%; height:80%; object-fit:contain; }
+  .mini-username{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    color:#5a2d82;
+    transition:color .7s ease;
+  }
+  body.dark .mini-username{ color:#dbe2ff; }
+
+  textarea, input[type="text"], input[type="file"]{
+    width:100%;
+    font-family:'Montserrat',sans-serif;
+    font-size:14px;
+    padding:12px 14px;
+    border-radius:14px;
+    border:3px solid var(--purple);
+    outline:none;
+    margin-bottom:10px;
+    background:#fff;
+    color:#3a2555;
+    transition:background .7s ease, color .7s ease, border-color .7s ease;
+  }
+  body.dark textarea, body.dark input[type="text"]{
+    background:#141b3d;
+    color:#e3e8fb;
+  }
+  textarea{ resize:vertical; min-height:80px; }
+  textarea:focus, input[type="text"]:focus{
+    border-color:var(--hotpink);
+    box-shadow:0 0 0 3px rgba(255,46,166,.2);
+  }
+
+  .btn{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    border:none;
+    border-radius:14px;
+    padding:11px 20px;
+    cursor:pointer;
+    color:#fff;
+    box-shadow:0 3px 0 rgba(0,0,0,.15);
+    transition:transform .1s ease, background .7s ease;
+  }
+  .btn:active{ transform:translateY(2px); }
+  .btn-confirm{ background:linear-gradient(135deg,#a988e8,#7d5cc7); }
+  body.dark .btn-confirm{ background:linear-gradient(135deg,#6b7fd7,#3a4aa0); }
+  .btn-discord{ background:linear-gradient(135deg,#7289da,#5865f2); }
+  .btn-delete{ background:linear-gradient(135deg,#e07a9b,#c2456e); font-size:12px; padding:7px 12px; }
+
+  .msg{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#7d5cc7;
+    min-height:18px;
+    margin:6px 0 0;
+    transition:color .7s ease;
+  }
+  body.dark .msg{ color:#c7d2f5; }
+  .msg.error{ color:#c0392b; }
+
+  .posts-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:16px;
+  }
+  .post-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:rgba(255,255,255,.55);
+    border-radius:14px;
+    padding:10px;
+    transition:background .7s ease;
+  }
+  body.dark .post-row{ background:rgba(255,255,255,.08); }
+  .post-row img{
+    width:64px;
+    height:64px;
+    border-radius:10px;
+    object-fit:cover;
+    flex-shrink:0;
+  }
+  .post-row .cap{
+    flex:1;
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#5a2d82;
+    word-break:break-word;
+    transition:color .7s ease;
+  }
+  body.dark .post-row .cap{ color:#dbe2ff; }
+
+  .empty-note{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    font-style:italic;
+    color:#a98fd0;
+    transition:color .7s ease;
+  }
+  body.dark .empty-note{ color:#8b9bd8; }
+
+  .center-state{
+    text-align:center;
+    padding:60px 20px;
+    font-family:'Montserrat',sans-serif;
+    color:#7d5cc7;
+    transition:color .7s ease;
+  }
+  body.dark .center-state{ color:#c7d2f5; }
+  .center-state .big{ font-size:44px; margin-bottom:12px; }
+
+  footer{
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    color:#8a4fb8;
+    font-size:13px;
+    padding:20px;
+    position:relative;
+    z-index:2;
+    transition:color .7s ease;
+  }
+  body.dark footer{ color:#b7c3f5; }
+
+  #themeToggle{
+    position:fixed;
+    top:16px;
+    right:16px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.8);
+    background:rgba(169,136,232,.35);
+    color:#5a3d8a;
+    font-size:17px;
+    cursor:pointer;
+    z-index:40;
+    opacity:.75;
+    transition:opacity .2s, transform .3s, background .3s, color .3s;
+  }
+  #themeToggle:hover{opacity:1; transform:rotate(15deg);}
+  body.dark #themeToggle{
+    background:rgba(107,127,215,.35);
+    color:#cdd6fa;
+    border-color:rgba(255,255,255,.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee-wrap">
+  <div class="marquee">✧･ﾟ: *✧･ﾟ:* MON DASHBOARD *:･ﾟ✧*:･ﾟ✧　　modifie ta bio et publie ce que tu veux　　★彡</div>
+</div>
+
+<div class="topbar">
+  <a class="backlink" href="index.html">← accueil</a>
+  <a class="backlink" href="chat.html">💬 chat</a>
+</div>
+
+<main id="main">
+  <div class="center-state"><div class="big">✧</div>chargement...</div>
+</main>
+
+<footer>site pensé par Lucas &amp; fait par Claude — Chibi</footer>
+
+<button id="themeToggle" title="mode sombre">🌙</button>
+
+<script src="chibi-data.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+/* Même client Discord que index.html. Si tu héberges ce dashboard sur une URL
+   différente, pense à ajouter CETTE page dans OAuth2 > Redirects sur
+   https://discord.com/developers/applications (même principe que pour index.html). */
+const DISCORD_CLIENT_ID = '1005172482539524286';
+
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyAZWsfrqCrmDFyvG5RNdQacEUbkAq2qXqM',
+  authDomain: 'chibi-be98b.firebaseapp.com',
+  databaseURL: 'https://chibi-be98b-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'chibi-be98b',
+  storageBucket: 'chibi-be98b.firebasestorage.app'
+};
+
+let db = null;
+try{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.database();
+}catch(e){ db = null; }
+
+const mainEl = document.getElementById('main');
+let discordUser = null;
+let myChibiId = null;
+
+function getRedirectUri(){
+  return window.location.origin + window.location.pathname;
+}
+
+function startDiscordLogin(){
+  const redirect = encodeURIComponent(getRedirectUri());
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${redirect}&response_type=token&scope=identify`;
+  window.location.href = url;
+}
+
+async function handleDiscordRedirect(){
+  if(window.location.hash && window.location.hash.includes('access_token')){
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const token = params.get('access_token');
+    if(token){
+      try{
+        const res = await fetch('https://discord.com/api/users/@me', {
+          headers:{ Authorization: 'Bearer ' + token }
+        });
+        if(res.ok){
+          const user = await res.json();
+          discordUser = { id: user.id, username: user.global_name || user.username };
+          try{ localStorage.setItem('discordUser', JSON.stringify(discordUser)); }catch(e){}
+        }
+      }catch(e){ /* ignore */ }
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }
+}
+
+function loadDiscordUser(){
+  try{
+    const raw = localStorage.getItem('discordUser');
+    discordUser = raw ? JSON.parse(raw) : null;
+  }catch(e){ discordUser = null; }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function chibiImage(id, customChibis){
+  return customChibis[id] || (typeof BASE_CHIBI_DATA !== 'undefined' ? BASE_CHIBI_DATA[id] : null) || '';
+}
+
+function renderLoggedOut(){
+  mainEl.innerHTML = `
+    <div class="center-state">
+      <div class="big">🎮</div>
+      Connecte-toi avec Discord pour accéder à ton dashboard ✧
+      <br><br>
+      <button class="btn btn-discord" id="loginBtn">se connecter avec Discord</button>
+    </div>`;
+  document.getElementById('loginBtn').addEventListener('click', startDiscordLogin);
+}
+
+function renderNoChibi(){
+  mainEl.innerHTML = `
+    <div class="center-state">
+      <div class="big">🌸</div>
+      Tu es connecté en tant que <b>@${escapeHtml(discordUser.username)}</b>, mais tu n'as pas encore choisi de chibi !
+      <br><br>
+      <a class="backlink" href="index.html">→ aller choisir mon chibi</a>
+    </div>`;
+}
+
+async function findMyChibiId(){
+  if(!db || !discordUser) return null;
+  const snap = await db.ref('assignments').get().catch(()=>null);
+  const assignments = snap && snap.exists() ? snap.val() : {};
+  const found = Object.entries(assignments).find(([, a]) => a && a.discordId === discordUser.id);
+  return found ? found[0] : null;
+}
+
+async function renderDashboard(){
+  const [cSnap, bSnap, pSnap] = await Promise.all([
+    db.ref('customChibis').get().catch(()=>null),
+    db.ref('profiles/' + myChibiId + '/bio').get().catch(()=>null),
+    db.ref('posts/' + myChibiId).get().catch(()=>null),
+  ]);
+  const customChibis = cSnap && cSnap.exists() ? cSnap.val() : {};
+  const img = chibiImage(myChibiId, customChibis);
+  const bio = bSnap && bSnap.exists() ? bSnap.val() : '';
+  const postsRaw = pSnap && pSnap.exists() ? pSnap.val() : {};
+  const posts = Object.entries(postsRaw)
+    .map(([postId, p]) => ({ postId, ...p }))
+    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+  mainEl.innerHTML = `
+    <h1 class="pagetitle">Mon dashboard ✧</h1>
+    <p class="subtext">gère ton profil public et tes publications</p>
+
+    <div class="card-box">
+      <div class="mini-profile">
+        <div class="mini-avatar"><div class="mini-avatar-inner">${img ? `<img src="${img}" alt="">` : '🌸'}</div></div>
+        <div class="mini-username">@${escapeHtml(discordUser.username)}</div>
+      </div>
+      <a class="backlink" href="membre.html?id=${encodeURIComponent(myChibiId)}">→ voir mon profil public</a>
+    </div>
+
+    <div class="card-box">
+      <h2>✏️ Ma bio</h2>
+      <textarea id="bioInput" maxlength="280" placeholder="écris quelque chose sur toi...">${escapeHtml(bio)}</textarea>
+      <button class="btn btn-confirm" id="saveBioBtn">enregistrer la bio</button>
+      <div class="msg" id="bioMsg"></div>
+    </div>
+
+    <div class="card-box">
+      <h2>📷 Publier quelque chose</h2>
+      <input type="file" id="postFile" accept="image/*">
+      <input type="text" id="postCaption" maxlength="150" placeholder="une petite légende (optionnel)">
+      <button class="btn btn-confirm" id="publishBtn">publier ✨</button>
+      <div class="msg" id="publishMsg"></div>
+    </div>
+
+    <div class="card-box">
+      <h2>🖼️ Mes publications</h2>
+      <div id="postsListWrap"></div>
+    </div>
+  `;
+
+  document.getElementById('saveBioBtn').addEventListener('click', saveBio);
+  document.getElementById('publishBtn').addEventListener('click', publishPost);
+  renderPostsList(posts);
+}
+
+function renderPostsList(posts){
+  const wrap = document.getElementById('postsListWrap');
+  if(!posts.length){
+    wrap.innerHTML = '<p class="empty-note">tu n\u2019as encore rien publié.</p>';
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'posts-list';
+  posts.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'post-row';
+
+    if(p.image){
+      const img = document.createElement('img');
+      img.src = p.image;
+      img.alt = '';
+      row.appendChild(img);
+    }
+
+    const cap = document.createElement('div');
+    cap.className = 'cap';
+    cap.textContent = p.caption || '(sans légende)';
+    row.appendChild(cap);
+
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'btn btn-delete';
+    delBtn.textContent = 'supprimer';
+    delBtn.addEventListener('click', () => deletePost(p.postId));
+    row.appendChild(delBtn);
+
+    list.appendChild(row);
+  });
+  wrap.innerHTML = '';
+  wrap.appendChild(list);
+}
+
+async function saveBio(){
+  const bioMsg = document.getElementById('bioMsg');
+  const val = document.getElementById('bioInput').value.trim();
+  if(!db){ bioMsg.textContent = "la base de données n'est pas accessible."; bioMsg.classList.add('error'); return; }
+  bioMsg.textContent = 'enregistrement...';
+  bioMsg.classList.remove('error');
+  try{
+    await db.ref('profiles/' + myChibiId + '/bio').set(val);
+    bioMsg.textContent = 'bio enregistrée ✨';
+  }catch(e){
+    bioMsg.textContent = "erreur, réessaie !";
+    bioMsg.classList.add('error');
+  }
+}
+
+function resizeImageFile(file, targetHeight){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error);
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const scale = targetHeight / img.height;
+        const w = Math.max(1, Math.round(img.width * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = targetHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, targetHeight);
+        let out;
+        try{
+          out = canvas.toDataURL('image/webp', 0.85);
+          if(!out || out.indexOf('data:image/webp') !== 0) throw new Error('no webp');
+        }catch(e){
+          out = canvas.toDataURL('image/jpeg', 0.85);
+        }
+        resolve(out);
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function publishPost(){
+  const publishMsg = document.getElementById('publishMsg');
+  const fileInput = document.getElementById('postFile');
+  const captionInput = document.getElementById('postCaption');
+  const file = fileInput.files && fileInput.files[0];
+  if(!file){
+    publishMsg.textContent = 'choisis une image d\u2019abord !';
+    publishMsg.classList.add('error');
+    return;
+  }
+  if(!db){
+    publishMsg.textContent = "la base de données n'est pas accessible.";
+    publishMsg.classList.add('error');
+    return;
+  }
+  publishMsg.textContent = 'publication en cours...';
+  publishMsg.classList.remove('error');
+  try{
+    const dataUrl = await resizeImageFile(file, 640);
+    const newRef = db.ref('posts/' + myChibiId).push();
+    await newRef.set({
+      image: dataUrl,
+      caption: captionInput.value.trim(),
+      createdAt: Date.now(),
+    });
+    publishMsg.textContent = 'publié ! ✨';
+    fileInput.value = '';
+    captionInput.value = '';
+    const pSnap = await db.ref('posts/' + myChibiId).get().catch(()=>null);
+    const postsRaw = pSnap && pSnap.exists() ? pSnap.val() : {};
+    const posts = Object.entries(postsRaw)
+      .map(([postId, p]) => ({ postId, ...p }))
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    renderPostsList(posts);
+  }catch(e){
+    publishMsg.textContent = "erreur lors de la publication, réessaie !";
+    publishMsg.classList.add('error');
+  }
+}
+
+async function deletePost(postId){
+  if(!confirm('Supprimer cette publication ?')) return;
+  try{
+    await db.ref('posts/' + myChibiId + '/' + postId).remove();
+    const pSnap = await db.ref('posts/' + myChibiId).get().catch(()=>null);
+    const postsRaw = pSnap && pSnap.exists() ? pSnap.val() : {};
+    const posts = Object.entries(postsRaw)
+      .map(([pid, p]) => ({ postId: pid, ...p }))
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    renderPostsList(posts);
+  }catch(e){
+    alert("erreur lors de la suppression, réessaie !");
+  }
+}
+
+async function init(){
+  await handleDiscordRedirect();
+  loadDiscordUser();
+
+  if(!discordUser){
+    renderLoggedOut();
+    return;
+  }
+  if(!db){
+    mainEl.innerHTML = '<div class="center-state"><div class="big">⚠</div>la base de données n\u2019est pas accessible pour le moment.</div>';
+    return;
+  }
+
+  myChibiId = await findMyChibiId();
+  if(!myChibiId){
+    renderNoChibi();
+    return;
+  }
+
+  renderDashboard();
+}
+
+/* ---------- thème clair / sombre (partagé) ---------- */
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(dark){
+  document.body.classList.toggle('dark', dark);
+  themeToggle.textContent = dark ? '☀' : '🌙';
+  themeToggle.title = dark ? 'mode clair' : 'mode sombre';
+  try{ localStorage.setItem('theme', dark ? 'dark' : 'light'); }catch(e){}
+}
+themeToggle.addEventListener('click', () => {
+  applyTheme(!document.body.classList.contains('dark'));
+});
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem('theme'); }catch(e){}
+applyTheme(savedTheme === 'dark');
+
+/* ---------- étoiles décoratives (partagées) ---------- */
+const sparkleChars = ['★','✦','✧','☆','✶'];
+for(let i=0;i<20;i++){
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = sparkleChars[i % sparkleChars.length];
+  s.style.left = Math.random()*100 + 'vw';
+  s.style.top = Math.random()*100 + 'vh';
+  s.style.animationDelay = (Math.random()*6) + 's';
+  s.style.animationDuration = (4 + Math.random()*5) + 's';
+  s.style.fontSize = (14 + Math.random()*24) + 'px';
+  document.body.appendChild(s);
+}
+
+init();
+</script>
+</body>
+</html>
