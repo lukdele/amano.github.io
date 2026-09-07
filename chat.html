@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✧･ﾟ Chat ﾟ･✧ | CHIBI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#d9c2ff;
+    --purple:#a988e8;
+    --blue:#c9b6ff;
+    --cyan:#e0d0ff;
+    --yellow:#f3e6ff;
+    --hotpink:#9b6bd6;
+  }
+  *{box-sizing:border-box;}
+  html, body{ height:100%; }
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Montserrat',sans-serif;
+    background:
+      radial-gradient(circle at 20% 20%, #ecdcff 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #ddd0ff 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #e6d9ff 0%, transparent 50%),
+      linear-gradient(135deg, #e4d6ff 0%, #ecdcff 40%, #f2e8ff 70%, #ded0f7 100%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 1s ease;
+    background:
+      radial-gradient(circle at 20% 20%, #2a3568 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #1f2a5c 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #232f66 0%, transparent 50%),
+      linear-gradient(135deg, #131a3a 0%, #1a2350 40%, #202b5e 70%, #161d42 100%);
+  }
+  body.dark::after{ opacity:1; }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g fill='white'><path d='M20 4 L23 15 L34 15 L25 22 L28 33 L20 26 L12 33 L15 22 L6 15 L17 15 Z'/><circle cx='90' cy='30' r='2.2'/><circle cx='60' cy='70' r='1.6'/><path d='M110 90 L112 96 L118 96 L113 100 L115 106 L110 102 L105 106 L107 100 L102 96 L108 96 Z'/><circle cx='25' cy='110' r='1.8'/><circle cx='75' cy='120' r='2.4'/><circle cx='130' cy='60' r='1.5'/></g></svg>");
+    background-size:140px 140px;
+    background-repeat:repeat;
+    opacity:.55;
+    animation:drift 40s linear infinite;
+  }
+  @keyframes drift{
+    0%{background-position:0 0; opacity:.4;}
+    50%{opacity:.65;}
+    100%{background-position:-280px 280px; opacity:.4;}
+  }
+
+  .sparkle{
+    position:fixed;
+    pointer-events:none;
+    font-size:28px;
+    color:#ffffff;
+    opacity:.9;
+    animation:float 6s ease-in-out infinite;
+    z-index:0;
+    filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px rgba(255,255,255,.7));
+    user-select:none;
+  }
+  @keyframes float{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    25%{transform:translate(10px,-18px) rotate(10deg);}
+    50%{transform:translate(-6px,-28px) rotate(-8deg);}
+    75%{transform:translate(-14px,-12px) rotate(6deg);}
+  }
+
+  .marquee-wrap{
+    width:100%;
+    background:linear-gradient(90deg,var(--hotpink),var(--purple),var(--pink),var(--hotpink));
+    background-size:300% 100%;
+    animation:gradientshift 6s linear infinite;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:4px solid #fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    position:relative;
+    z-index:2;
+    flex-shrink:0;
+  }
+  @keyframes gradientshift{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
+  }
+  .marquee{
+    display:inline-block;
+    padding:8px 0;
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:1px;
+    text-shadow:0 0 6px rgba(255,255,255,.8), 2px 2px 0 rgba(0,0,0,.15);
+    animation:scroll 18s linear infinite;
+  }
+  @keyframes scroll{
+    0%{transform:translateX(100vw);}
+    100%{transform:translateX(-100%);}
+  }
+
+  .topbar{
+    max-width:700px;
+    width:100%;
+    margin:0 auto;
+    padding:14px 20px 0;
+    position:relative;
+    z-index:2;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    flex-shrink:0;
+  }
+  .backlink{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:#7d5cc7;
+    text-decoration:none;
+    background:rgba(255,255,255,.65);
+    padding:7px 14px;
+    border-radius:20px;
+    box-shadow:0 2px 8px rgba(140,90,200,.2);
+    transition:color .7s ease, background .7s ease, transform .15s ease;
+  }
+  .backlink:hover{ transform:translateY(-1px); }
+  body.dark .backlink{ color:#c7d2f5; background:rgba(28,36,82,.6); }
+
+  main{
+    max-width:700px;
+    width:100%;
+    margin:0 auto;
+    padding:16px 20px 0;
+    position:relative;
+    z-index:2;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+
+  h1.pagetitle{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:24px;
+    color:#5a2d82;
+    margin:6px 0 2px;
+    transition:color .7s ease;
+    flex-shrink:0;
+  }
+  body.dark h1.pagetitle{ color:#dbe2ff; }
+  p.subtext{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#7a5aa8;
+    margin:0 0 14px;
+    transition:color .7s ease;
+    flex-shrink:0;
+  }
+  body.dark p.subtext{ color:#b7c3f5; }
+
+  /* ---------- fenêtre de chat ---------- */
+  .chat-box{
+    flex:1;
+    min-height:0;
+    background:rgba(255,255,255,.55);
+    border:3px solid #fff;
+    border-radius:22px 22px 0 0;
+    box-shadow:0 8px 20px rgba(140,90,200,.18);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    transition:background .7s ease, border-color .7s ease;
+  }
+  body.dark .chat-box{ background:rgba(28,36,82,.45); border-color:rgba(255,255,255,.15); }
+
+  .messages{
+    flex:1;
+    overflow-y:auto;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .msg-row{
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+    max-width:85%;
+  }
+  .msg-row.mine{
+    align-self:flex-end;
+    flex-direction:row-reverse;
+  }
+  .msg-avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    padding:2px;
+    background:conic-gradient(from 210deg, #ffd76b, var(--hotpink), var(--purple), var(--pink), #ffd76b);
+    flex-shrink:0;
+  }
+  .msg-avatar-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    overflow:hidden;
+  }
+  body.dark .msg-avatar-inner{ background:#1c2452; }
+  .msg-avatar-inner img{ width:80%; height:80%; object-fit:contain; }
+
+  .msg-bubble{
+    position:relative;
+    background:#fff;
+    border-radius:16px;
+    padding:8px 12px;
+    box-shadow:0 2px 6px rgba(140,90,200,.15);
+    transition:background .7s ease;
+  }
+  body.dark .msg-bubble{ background:#2a3568; }
+  .msg-row.mine .msg-bubble{
+    background:linear-gradient(135deg,#a988e8,#7d5cc7);
+    color:#fff;
+  }
+  body.dark .msg-row.mine .msg-bubble{ background:linear-gradient(135deg,#6b7fd7,#3a4aa0); }
+
+  .msg-uname{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    color:#7d5cc7;
+    margin-bottom:2px;
+    transition:color .7s ease;
+  }
+  body.dark .msg-uname{ color:#c7d2f5; }
+  .msg-row.mine .msg-uname{ color:rgba(255,255,255,.85); }
+
+  .msg-text{
+    font-family:'Montserrat',sans-serif;
+    font-size:14px;
+    color:#3a2555;
+    word-break:break-word;
+    white-space:pre-wrap;
+    transition:color .7s ease;
+  }
+  body.dark .msg-text{ color:#e3e8fb; }
+  .msg-row.mine .msg-text{ color:#fff; }
+
+  .msg-time{
+    font-family:'Montserrat',sans-serif;
+    font-size:9px;
+    color:#a98fd0;
+    margin-top:3px;
+    text-align:right;
+  }
+  .msg-row.mine .msg-time{ color:rgba(255,255,255,.65); }
+
+  .msg-del{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:11px;
+    color:#c2456e;
+    opacity:.6;
+    align-self:center;
+    padding:2px 4px;
+  }
+  .msg-del:hover{ opacity:1; }
+
+  .empty-note, .loading-msg{
+    text-align:center;
+    padding:40px 20px;
+    font-family:'Montserrat',sans-serif;
+    color:#a98fd0;
+    transition:color .7s ease;
+  }
+  body.dark .empty-note, body.dark .loading-msg{ color:#8b9bd8; }
+
+  /* ---------- zone de saisie ---------- */
+  .chat-input-bar{
+    flex-shrink:0;
+    border-top:2px solid rgba(255,255,255,.6);
+    background:rgba(255,255,255,.7);
+    padding:10px;
+    display:flex;
+    gap:8px;
+    align-items:flex-end;
+    transition:background .7s ease, border-color .7s ease;
+  }
+  body.dark .chat-input-bar{ background:rgba(20,27,61,.7); border-color:rgba(255,255,255,.15); }
+
+  #chatInput{
+    flex:1;
+    font-family:'Montserrat',sans-serif;
+    font-size:14px;
+    padding:10px 14px;
+    border-radius:16px;
+    border:3px solid var(--purple);
+    outline:none;
+    background:#fff;
+    color:#3a2555;
+    resize:none;
+    max-height:90px;
+    min-height:40px;
+    transition:background .7s ease, color .7s ease, border-color .7s ease;
+  }
+  body.dark #chatInput{ background:#141b3d; color:#e3e8fb; }
+  #chatInput:focus{ border-color:var(--hotpink); box-shadow:0 0 0 3px rgba(255,46,166,.2); }
+
+  .send-btn{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    border:none;
+    border-radius:16px;
+    padding:10px 18px;
+    cursor:pointer;
+    color:#fff;
+    background:linear-gradient(135deg,#a988e8,#7d5cc7);
+    box-shadow:0 3px 0 rgba(0,0,0,.12);
+    transition:transform .1s ease, background .7s ease;
+    flex-shrink:0;
+  }
+  .send-btn:active{ transform:translateY(2px); }
+  body.dark .send-btn{ background:linear-gradient(135deg,#6b7fd7,#3a4aa0); }
+
+  .login-bar{
+    flex-shrink:0;
+    border-top:2px solid rgba(255,255,255,.6);
+    background:rgba(255,255,255,.7);
+    padding:14px;
+    text-align:center;
+    transition:background .7s ease, border-color .7s ease;
+  }
+  body.dark .login-bar{ background:rgba(20,27,61,.7); border-color:rgba(255,255,255,.15); }
+  .login-bar p{
+    margin:0 0 10px;
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#7a5aa8;
+    transition:color .7s ease;
+  }
+  body.dark .login-bar p{ color:#b7c3f5; }
+  .btn-discord{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    border:none;
+    border-radius:14px;
+    padding:10px 20px;
+    cursor:pointer;
+    color:#fff;
+    background:linear-gradient(135deg,#7289da,#5865f2);
+    box-shadow:0 3px 0 rgba(0,0,0,.12);
+  }
+
+  footer{
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    color:#8a4fb8;
+    font-size:12px;
+    padding:8px;
+    position:relative;
+    z-index:2;
+    transition:color .7s ease;
+    flex-shrink:0;
+  }
+  body.dark footer{ color:#b7c3f5; }
+
+  #themeToggle{
+    position:fixed;
+    top:16px;
+    right:16px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.8);
+    background:rgba(169,136,232,.35);
+    color:#5a3d8a;
+    font-size:17px;
+    cursor:pointer;
+    z-index:40;
+    opacity:.75;
+    transition:opacity .2s, transform .3s, background .3s, color .3s;
+  }
+  #themeToggle:hover{opacity:1; transform:rotate(15deg);}
+  body.dark #themeToggle{
+    background:rgba(107,127,215,.35);
+    color:#cdd6fa;
+    border-color:rgba(255,255,255,.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee-wrap">
+  <div class="marquee">✧･ﾟ: *✧･ﾟ:* LE CHAT DE LA COMMUNAUTÉ CHIBI *:･ﾟ✧*:･ﾟ✧　　sois sympa, c'est tout　　★彡</div>
+</div>
+
+<div class="topbar">
+  <a class="backlink" href="index.html">← accueil</a>
+  <a class="backlink" href="chibis.html">🐣 chibis</a>
+</div>
+
+<main>
+  <h1 class="pagetitle">Chat ✧</h1>
+  <p class="subtext">discute en direct avec les autres membres</p>
+
+  <div class="chat-box">
+    <div class="messages" id="messages">
+      <div class="loading-msg">chargement des messages... ✧</div>
+    </div>
+    <div id="bottomBar"></div>
+  </div>
+</main>
+
+<footer>site pensé par Lucas &amp; fait par Claude — Chibi</footer>
+
+<button id="themeToggle" title="mode sombre">🌙</button>
+
+<script src="chibi-data.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+/* Même client Discord que index.html / dashboard.html. Si ce chat est hébergé
+   sur une URL différente, ajoute-la dans OAuth2 > Redirects sur
+   https://discord.com/developers/applications */
+const DISCORD_CLIENT_ID = '1005172482539524286';
+
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyAZWsfrqCrmDFyvG5RNdQacEUbkAq2qXqM',
+  authDomain: 'chibi-be98b.firebaseapp.com',
+  databaseURL: 'https://chibi-be98b-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'chibi-be98b',
+  storageBucket: 'chibi-be98b.firebasestorage.app'
+};
+
+let db = null;
+try{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.database();
+}catch(e){ db = null; }
+
+const messagesEl = document.getElementById('messages');
+const bottomBar = document.getElementById('bottomBar');
+
+let discordUser = null;
+let myChibiId = null;
+let customChibisCache = {};
+let chibiOwnerCache = {}; // discordId -> chibiId, rempli à la volée
+let firstLoad = true;
+
+function getRedirectUri(){
+  return window.location.origin + window.location.pathname;
+}
+
+function startDiscordLogin(){
+  const redirect = encodeURIComponent(getRedirectUri());
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${redirect}&response_type=token&scope=identify`;
+  window.location.href = url;
+}
+
+async function handleDiscordRedirect(){
+  if(window.location.hash && window.location.hash.includes('access_token')){
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const token = params.get('access_token');
+    if(token){
+      try{
+        const res = await fetch('https://discord.com/api/users/@me', {
+          headers:{ Authorization: 'Bearer ' + token }
+        });
+        if(res.ok){
+          const user = await res.json();
+          discordUser = { id: user.id, username: user.global_name || user.username };
+          try{ localStorage.setItem('discordUser', JSON.stringify(discordUser)); }catch(e){}
+        }
+      }catch(e){ /* ignore */ }
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }
+}
+
+function loadDiscordUser(){
+  try{
+    const raw = localStorage.getItem('discordUser');
+    discordUser = raw ? JSON.parse(raw) : null;
+  }catch(e){ discordUser = null; }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function chibiImage(id){
+  if(!id) return '';
+  return customChibisCache[id] || (typeof BASE_CHIBI_DATA !== 'undefined' ? BASE_CHIBI_DATA[id] : null) || '';
+}
+
+async function findMyChibiId(){
+  if(!db || !discordUser) return null;
+  const snap = await db.ref('assignments').get().catch(()=>null);
+  const assignments = snap && snap.exists() ? snap.val() : {};
+  Object.entries(assignments).forEach(([chibiId, a]) => {
+    if(a && a.discordId) chibiOwnerCache[a.discordId] = chibiId;
+  });
+  return chibiOwnerCache[discordUser.id] || null;
+}
+
+function formatTime(ts){
+  if(!ts) return '';
+  const d = new Date(ts);
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function renderMessage(key, m){
+  const isMine = !!(discordUser && m.discordId === discordUser.id);
+  const chibiId = m.chibiId || chibiOwnerCache[m.discordId] || null;
+  const img = chibiImage(chibiId);
+
+  const row = document.createElement('div');
+  row.className = 'msg-row' + (isMine ? ' mine' : '');
+  row.dataset.key = key;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.innerHTML = `<div class="msg-avatar-inner">${img ? `<img src="${img}" alt="">` : '🌸'}</div>`;
+  row.appendChild(avatar);
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = `
+    <div class="msg-uname">${isMine ? 'toi' : '@' + escapeHtml(m.discordUsername || 'quelqu\u2019un')}</div>
+    <div class="msg-text">${escapeHtml(m.text || '')}</div>
+    <div class="msg-time">${formatTime(m.createdAt)}</div>
+  `;
+  row.appendChild(bubble);
+
+  if(isMine){
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'msg-del';
+    del.textContent = '✕';
+    del.title = 'supprimer';
+    del.addEventListener('click', () => deleteMessage(key));
+    row.appendChild(del);
+  }
+
+  return row;
+}
+
+async function deleteMessage(key){
+  if(!db) return;
+  try{ await db.ref('chat/' + key).remove(); }catch(e){ /* ignore */ }
+}
+
+function isScrolledToBottom(){
+  return messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 60;
+}
+
+function scrollToBottom(){
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function listenToChat(){
+  const cSnap = await db.ref('customChibis').get().catch(()=>null);
+  customChibisCache = cSnap && cSnap.exists() ? cSnap.val() : {};
+
+  messagesEl.innerHTML = '';
+
+  db.ref('chat').limitToLast(200).on('child_added', (snap) => {
+    const wasAtBottom = isScrolledToBottom() || firstLoad;
+    if(messagesEl.querySelector('.loading-msg') || messagesEl.querySelector('.empty-note')){
+      messagesEl.innerHTML = '';
+    }
+    const row = renderMessage(snap.key, snap.val() || {});
+    messagesEl.appendChild(row);
+    if(wasAtBottom) scrollToBottom();
+  });
+
+  db.ref('chat').limitToLast(200).on('child_removed', (snap) => {
+    const row = messagesEl.querySelector(`[data-key="${CSS.escape(snap.key)}"]`);
+    if(row) row.remove();
+  });
+
+  setTimeout(() => {
+    firstLoad = false;
+    if(!messagesEl.children.length){
+      messagesEl.innerHTML = '<div class="empty-note">✧ personne n\u2019a encore écrit, sois le/la premier·e ! ✧</div>';
+    }
+    scrollToBottom();
+  }, 800);
+}
+
+function renderInputBar(){
+  bottomBar.innerHTML = `
+    <div class="chat-input-bar">
+      <textarea id="chatInput" maxlength="500" placeholder="écris un message..." rows="1"></textarea>
+      <button class="send-btn" id="sendBtn" type="button">envoyer ✧</button>
+    </div>
+  `;
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+
+  function autoGrow(){
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 90) + 'px';
+  }
+  input.addEventListener('input', autoGrow);
+  input.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  sendBtn.addEventListener('click', sendMessage);
+
+  async function sendMessage(){
+    const text = input.value.trim();
+    if(!text || !db) return;
+    sendBtn.disabled = true;
+    try{
+      await db.ref('chat').push({
+        text,
+        discordId: discordUser.id,
+        discordUsername: discordUser.username,
+        chibiId: myChibiId,
+        createdAt: Date.now(),
+      });
+      input.value = '';
+      autoGrow();
+    }catch(e){ /* ignore */ }
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+function renderLoginBar(){
+  bottomBar.innerHTML = `
+    <div class="login-bar">
+      <p>connecte-toi avec Discord pour participer au chat ✧</p>
+      <button class="btn-discord" id="chatLoginBtn" type="button">se connecter avec Discord</button>
+    </div>
+  `;
+  document.getElementById('chatLoginBtn').addEventListener('click', startDiscordLogin);
+}
+
+async function init(){
+  await handleDiscordRedirect();
+  loadDiscordUser();
+
+  if(!db){
+    messagesEl.innerHTML = '<div class="empty-note">⚠ la base de données n\u2019est pas accessible pour le moment.</div>';
+    return;
+  }
+
+  if(discordUser){
+    myChibiId = await findMyChibiId();
+    renderInputBar();
+  } else {
+    renderLoginBar();
+  }
+
+  listenToChat();
+}
+
+/* ---------- thème clair / sombre (partagé) ---------- */
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(dark){
+  document.body.classList.toggle('dark', dark);
+  themeToggle.textContent = dark ? '☀' : '🌙';
+  themeToggle.title = dark ? 'mode clair' : 'mode sombre';
+  try{ localStorage.setItem('theme', dark ? 'dark' : 'light'); }catch(e){}
+}
+themeToggle.addEventListener('click', () => {
+  applyTheme(!document.body.classList.contains('dark'));
+});
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem('theme'); }catch(e){}
+applyTheme(savedTheme === 'dark');
+
+/* ---------- étoiles décoratives (partagées, en petit nombre pour ne pas gêner le chat) ---------- */
+const sparkleChars = ['★','✦','✧','☆','✶'];
+for(let i=0;i<10;i++){
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = sparkleChars[i % sparkleChars.length];
+  s.style.left = Math.random()*100 + 'vw';
+  s.style.top = Math.random()*100 + 'vh';
+  s.style.animationDelay = (Math.random()*6) + 's';
+  s.style.animationDuration = (4 + Math.random()*5) + 's';
+  s.style.fontSize = (14 + Math.random()*24) + 'px';
+  s.style.zIndex = '-1';
+  document.body.appendChild(s);
+}
+
+init();
+</script>
+</body>
+</html>

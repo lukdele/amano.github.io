@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✧･ﾟ CHIBI ﾟ･✧ | Accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#d9c2ff;
+    --purple:#a988e8;
+    --blue:#c9b6ff;
+    --cyan:#e0d0ff;
+    --yellow:#f3e6ff;
+    --hotpink:#9b6bd6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Montserrat',sans-serif;
+    background:
+      radial-gradient(circle at 20% 20%, #ecdcff 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #ddd0ff 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #e6d9ff 0%, transparent 50%),
+      linear-gradient(135deg, #e4d6ff 0%, #ecdcff 40%, #f2e8ff 70%, #ded0f7 100%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+    position:relative;
+    padding-bottom:80px;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 1s ease;
+    background:
+      radial-gradient(circle at 20% 20%, #2a3568 0%, transparent 45%),
+      radial-gradient(circle at 80% 10%, #1f2a5c 0%, transparent 45%),
+      radial-gradient(circle at 50% 90%, #232f66 0%, transparent 50%),
+      linear-gradient(135deg, #131a3a 0%, #1a2350 40%, #202b5e 70%, #161d42 100%);
+  }
+  body.dark::after{ opacity:1; }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g fill='white'><path d='M20 4 L23 15 L34 15 L25 22 L28 33 L20 26 L12 33 L15 22 L6 15 L17 15 Z'/><circle cx='90' cy='30' r='2.2'/><circle cx='60' cy='70' r='1.6'/><path d='M110 90 L112 96 L118 96 L113 100 L115 106 L110 102 L105 106 L107 100 L102 96 L108 96 Z'/><circle cx='25' cy='110' r='1.8'/><circle cx='75' cy='120' r='2.4'/><circle cx='130' cy='60' r='1.5'/></g></svg>");
+    background-size:140px 140px;
+    background-repeat:repeat;
+    opacity:.55;
+    animation:drift 40s linear infinite;
+  }
+  @keyframes drift{
+    0%{background-position:0 0; opacity:.4;}
+    50%{opacity:.65;}
+    100%{background-position:-280px 280px; opacity:.4;}
+  }
+
+  .sparkle{
+    position:fixed;
+    pointer-events:none;
+    font-size:28px;
+    color:#ffffff;
+    opacity:.9;
+    animation:float 6s ease-in-out infinite;
+    z-index:0;
+    filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 10px rgba(255,255,255,.7));
+    user-select:none;
+  }
+  @keyframes float{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    25%{transform:translate(10px,-18px) rotate(10deg);}
+    50%{transform:translate(-6px,-28px) rotate(-8deg);}
+    75%{transform:translate(-14px,-12px) rotate(6deg);}
+  }
+
+  .marquee-wrap{
+    width:100%;
+    background:linear-gradient(90deg,var(--hotpink),var(--purple),var(--pink),var(--hotpink));
+    background-size:300% 100%;
+    animation:gradientshift 6s linear infinite;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:4px solid #fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    position:relative;
+    z-index:2;
+  }
+  @keyframes gradientshift{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
+  }
+  .marquee{
+    display:inline-block;
+    padding:8px 0;
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:1px;
+    text-shadow:0 0 6px rgba(255,255,255,.8), 2px 2px 0 rgba(0,0,0,.15);
+    animation:scroll 18s linear infinite;
+  }
+  @keyframes scroll{
+    0%{transform:translateX(100vw);}
+    100%{transform:translateX(-100%);}
+  }
+
+  /* ---------- barre de navigation ---------- */
+  .site-nav{
+    width:100%;
+    background:linear-gradient(90deg,var(--hotpink),var(--purple),var(--pink),var(--hotpink));
+    background-size:300% 100%;
+    animation:gradientshift 10s linear infinite;
+    border-bottom:4px solid #fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    position:relative;
+    z-index:2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:34px;
+    padding:10px 16px;
+    transition:background .7s ease;
+  }
+  body.dark .site-nav{
+    background:linear-gradient(90deg,#3a4aa0,#6b7fd7,#8fa0e8,#3a4aa0);
+    background-size:300% 100%;
+  }
+  .site-nav button, .site-nav a{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:.4px;
+    color:#fff;
+    text-decoration:none;
+    text-shadow:0 0 6px rgba(255,255,255,.6), 1px 1px 0 rgba(0,0,0,.2);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 6px;
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .site-nav button:hover, .site-nav a:hover{
+    transform:translateY(-2px);
+    opacity:.85;
+  }
+
+  header{
+    text-align:center;
+    padding:26px 20px 6px;
+    position:relative;
+    z-index:2;
+  }
+  header h1{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:30px;
+    color:#5a2d82;
+    margin:0 0 6px;
+    transition:color .7s ease;
+  }
+  body.dark header h1{ color:#dbe2ff; }
+  header p.subtitle{
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    color:#7a5aa8;
+    margin:0;
+    transition:color .7s ease;
+  }
+  body.dark header p.subtitle{ color:#b7c3f5; }
+
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:24px 20px 20px;
+    position:relative;
+    z-index:2;
+  }
+
+  section.block{ margin-bottom:44px; }
+  h2.section-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:17px;
+    color:#5a2d82;
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:color .7s ease;
+  }
+  body.dark h2.section-title{ color:#dbe2ff; }
+
+  /* ---------- rangée de vidéos (asymétrique, défilement horizontal) ---------- */
+  .videos-row{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    padding:4px 4px 14px;
+    margin:0 -20px;
+    padding-left:20px;
+    padding-right:20px;
+    scroll-snap-type:x proximity;
+  }
+  .videos-row::-webkit-scrollbar{ height:8px; }
+  .videos-row::-webkit-scrollbar-thumb{ background:var(--purple); border-radius:8px; }
+
+  .video-card{
+    flex:0 0 auto;
+    width:220px;
+    scroll-snap-align:start;
+    text-decoration:none;
+    display:block;
+    background:rgba(255,255,255,.7);
+    border:3px solid #fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 6px 16px rgba(140,90,200,.2);
+    transition:transform .15s ease, background .7s ease, border-color .7s ease;
+  }
+  .video-card:nth-child(3n+2){ transform:translateY(10px); }
+  .video-card:nth-child(3n){ transform:translateY(-6px); }
+  .video-card:hover{ transform:translateY(-4px) scale(1.03); }
+  body.dark .video-card{ background:rgba(28,36,82,.6); border-color:rgba(255,255,255,.15); }
+  .video-thumb{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    display:block;
+    background:linear-gradient(145deg, var(--pink), var(--blue));
+  }
+  .video-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    color:#3a2555;
+    padding:8px 10px 10px;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    transition:color .7s ease;
+  }
+  body.dark .video-title{ color:#e3e8fb; }
+
+  /* ---------- fil d'actualité, centré mais asymétrique ---------- */
+  .feed-list{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .feed-card{
+    background:rgba(255,255,255,.6);
+    border:3px solid #fff;
+    border-radius:22px;
+    padding:16px;
+    box-shadow:0 8px 20px rgba(140,90,200,.16);
+    transition:background .7s ease, border-color .7s ease;
+  }
+  body.dark .feed-card{ background:rgba(28,36,82,.5); border-color:rgba(255,255,255,.14); }
+
+  .feed-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .feed-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    padding:2px;
+    background:conic-gradient(from 210deg, #ffd76b, var(--hotpink), var(--purple), var(--pink), #ffd76b);
+    flex-shrink:0;
+  }
+  .feed-avatar-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  body.dark .feed-avatar-inner{ background:#1c2452; }
+  .feed-avatar-inner img{ width:80%; height:80%; object-fit:contain; }
+  .feed-meta{ display:flex; flex-direction:column; }
+  .feed-uname{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    color:#5a2d82;
+    text-decoration:none;
+    transition:color .7s ease;
+  }
+  body.dark .feed-uname{ color:#dbe2ff; }
+  .feed-time{
+    font-family:'Montserrat',sans-serif;
+    font-size:11px;
+    color:#a98fd0;
+  }
+  body.dark .feed-time{ color:#8b9bd8; }
+
+  .feed-photo-wrap{
+    display:flex;
+    margin-bottom:10px;
+  }
+  .feed-card.align-l .feed-photo-wrap{ justify-content:flex-start; }
+  .feed-card.align-r .feed-photo-wrap{ justify-content:flex-end; }
+
+  .feed-photo{
+    width:78%;
+    max-width:340px;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:16px;
+    box-shadow:0 6px 16px rgba(140,90,200,.25);
+    border:3px solid #fff;
+  }
+  .feed-card.align-l .feed-photo{ transform:rotate(-1.4deg); }
+  .feed-card.align-r .feed-photo{ transform:rotate(1.4deg); }
+
+  .feed-caption{
+    font-family:'Montserrat',sans-serif;
+    font-size:13.5px;
+    color:#3a2555;
+    margin:0 0 10px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    transition:color .7s ease;
+  }
+  body.dark .feed-caption{ color:#e3e8fb; }
+
+  .feed-actions{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .like-btn{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:18px;
+    padding:2px 4px;
+    line-height:1;
+    transition:transform .12s ease;
+  }
+  .like-btn:active{ transform:scale(1.3); }
+  .like-count{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:#7d5cc7;
+    transition:color .7s ease;
+  }
+  body.dark .like-count{ color:#c7d2f5; }
+
+  .empty-note, .loading-msg{
+    text-align:center;
+    padding:30px 20px;
+    font-family:'Montserrat',sans-serif;
+    color:#a98fd0;
+    transition:color .7s ease;
+  }
+  body.dark .empty-note, body.dark .loading-msg{ color:#8b9bd8; }
+
+  footer{
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    color:#8a4fb8;
+    font-size:13px;
+    padding:20px;
+    position:relative;
+    z-index:2;
+    transition:color .7s ease;
+  }
+  body.dark footer{ color:#b7c3f5; }
+
+  #themeToggle{
+    position:fixed;
+    top:16px;
+    right:16px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.8);
+    background:rgba(169,136,232,.35);
+    color:#5a3d8a;
+    font-size:17px;
+    cursor:pointer;
+    z-index:40;
+    opacity:.75;
+    transition:opacity .2s, transform .3s, background .3s, color .3s;
+  }
+  #themeToggle:hover{opacity:1; transform:rotate(15deg);}
+  body.dark #themeToggle{
+    background:rgba(107,127,215,.35);
+    color:#cdd6fa;
+    border-color:rgba(255,255,255,.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee-wrap">
+  <div class="marquee">✧･ﾟ: *✧･ﾟ:* BIENVENUE SUR CHIBI *:･ﾟ✧*:･ﾟ✧　　le fil d'actualité de la communauté　　★彡</div>
+</div>
+
+<nav class="site-nav">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="chibis.html">🐣 Chibis</a>
+  <a href="dashboard.html">📝 Dashboard</a>
+  <a href="chat.html">💬 Chat</a>
+  <a id="myProfileBtn" href="#">🌸 Mon profil</a>
+</nav>
+
+<header>
+  <h1>✧ Fil d'actualité ✧</h1>
+  <p class="subtitle">les dernières vidéos et les derniers posts de la communauté</p>
+</header>
+
+<main>
+  <section class="block">
+    <h2 class="section-title">📺 dernières vidéos</h2>
+    <div class="videos-row" id="videosRow">
+      <div class="loading-msg">chargement des vidéos... ✧</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="section-title">✧ fil d'actualité</h2>
+    <div class="feed-list" id="feedList">
+      <div class="loading-msg">chargement du fil... ✧</div>
+    </div>
+  </section>
+</main>
+
+<footer>site pensé par Lucas &amp; fait par Claude — Chibi</footer>
+
+<button id="themeToggle" title="mode sombre">🌙</button>
+
+<script src="chibi-data.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+/* Même client Discord que les autres pages. Si cette page est hébergée sur une
+   URL différente, ajoute-la dans OAuth2 > Redirects sur
+   https://discord.com/developers/applications */
+const DISCORD_CLIENT_ID = '1005172482539524286';
+
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyAZWsfrqCrmDFyvG5RNdQacEUbkAq2qXqM',
+  authDomain: 'chibi-be98b.firebaseapp.com',
+  databaseURL: 'https://chibi-be98b-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'chibi-be98b',
+  storageBucket: 'chibi-be98b.firebasestorage.app'
+};
+
+let db = null;
+try{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.database();
+}catch(e){ db = null; }
+
+let discordUser = null;
+let customChibisCache = {};
+let assignmentsCache = {};
+const videosRow = document.getElementById('videosRow');
+const feedList = document.getElementById('feedList');
+
+function getRedirectUri(){
+  return window.location.origin + window.location.pathname;
+}
+
+function startDiscordLogin(){
+  const redirect = encodeURIComponent(getRedirectUri());
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${redirect}&response_type=token&scope=identify`;
+  window.location.href = url;
+}
+
+async function handleDiscordRedirect(){
+  if(window.location.hash && window.location.hash.includes('access_token')){
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const token = params.get('access_token');
+    if(token){
+      try{
+        const res = await fetch('https://discord.com/api/users/@me', {
+          headers:{ Authorization: 'Bearer ' + token }
+        });
+        if(res.ok){
+          const user = await res.json();
+          discordUser = { id: user.id, username: user.global_name || user.username };
+          try{ localStorage.setItem('discordUser', JSON.stringify(discordUser)); }catch(e){}
+        }
+      }catch(e){ /* ignore */ }
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  }
+}
+
+function loadDiscordUser(){
+  try{
+    const raw = localStorage.getItem('discordUser');
+    discordUser = raw ? JSON.parse(raw) : null;
+  }catch(e){ discordUser = null; }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function chibiImage(id){
+  if(!id) return '';
+  return customChibisCache[id] || (typeof BASE_CHIBI_DATA !== 'undefined' ? BASE_CHIBI_DATA[id] : null) || '';
+}
+
+function formatDate(ts){
+  if(!ts) return '';
+  const d = new Date(ts);
+  const dd = d.getDate().toString().padStart(2,'0');
+  const mm = (d.getMonth()+1).toString().padStart(2,'0');
+  const hh = d.getHours().toString().padStart(2,'0');
+  const mi = d.getMinutes().toString().padStart(2,'0');
+  return `${dd}/${mm} à ${hh}:${mi}`;
+}
+
+/* ---------- "mon profil" dans la nav ---------- */
+document.getElementById('myProfileBtn').addEventListener('click', (e) => {
+  e.preventDefault();
+  if(!discordUser){ startDiscordLogin(); return; }
+  const mine = Object.entries(assignmentsCache).find(([, a]) => a && a.discordId === discordUser.id);
+  if(!mine){
+    alert('choisis d\u2019abord ton chibi sur la page Chibis ! ✧');
+    return;
+  }
+  window.location.href = 'membre.html?id=' + encodeURIComponent(mine[0]);
+});
+
+/* ---------- vidéos YouTube (via proxy RSS -> JSON, pas de clé API nécessaire) ---------- */
+async function loadVideos(){
+  const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCr-4J8TcjVIc0X4-g5CJbbQ';
+  const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl);
+  try{
+    const res = await fetch(api);
+    const data = await res.json();
+    if(data.status !== 'ok' || !data.items || !data.items.length){
+      throw new Error('feed vide');
+    }
+    renderVideos(data.items.slice(0, 10));
+  }catch(e){
+    videosRow.innerHTML = '<div class="empty-note">impossible de charger les vidéos pour le moment (réessaie plus tard) ✧</div>';
+  }
+}
+
+function renderVideos(items){
+  videosRow.innerHTML = '';
+  items.forEach(it => {
+    const a = document.createElement('a');
+    a.className = 'video-card';
+    a.href = it.link;
+    a.target = '_blank';
+    a.rel = 'noopener';
+
+    const thumb = document.createElement('img');
+    thumb.className = 'video-thumb';
+    thumb.loading = 'lazy';
+    thumb.alt = it.title || '';
+    thumb.src = (it.thumbnail) || (it.enclosure && it.enclosure.link) || '';
+    a.appendChild(thumb);
+
+    const title = document.createElement('div');
+    title.className = 'video-title';
+    title.textContent = it.title || '';
+    a.appendChild(title);
+
+    videosRow.appendChild(a);
+  });
+}
+
+/* ---------- fil d'actualité (tous les posts de tous les membres) ---------- */
+async function loadFeed(){
+  const [postsSnap, assignSnap, customSnap] = await Promise.all([
+    db.ref('posts').get().catch(()=>null),
+    db.ref('assignments').get().catch(()=>null),
+    db.ref('customChibis').get().catch(()=>null),
+  ]);
+
+  const postsTree = postsSnap && postsSnap.exists() ? postsSnap.val() : {};
+  assignmentsCache = assignSnap && assignSnap.exists() ? assignSnap.val() : {};
+  customChibisCache = customSnap && customSnap.exists() ? customSnap.val() : {};
+
+  const flat = [];
+  Object.entries(postsTree).forEach(([chibiId, userPosts]) => {
+    Object.entries(userPosts || {}).forEach(([postId, p]) => {
+      if(!p || typeof p !== 'object') return;
+      flat.push({ chibiId, postId, ...p });
+    });
+  });
+  flat.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+  renderFeed(flat.slice(0, 50));
+}
+
+function renderFeed(posts){
+  if(!posts.length){
+    feedList.innerHTML = '<div class="empty-note">📷 aucune publication pour l\u2019instant ✧<br>va faire un tour sur ton dashboard pour publier quelque chose !</div>';
+    return;
+  }
+
+  feedList.innerHTML = '';
+  posts.forEach((p, i) => {
+    const author = assignmentsCache[p.chibiId];
+    const uname = (author && author.discordUsername) || 'quelqu\u2019un';
+    const img = chibiImage(p.chibiId);
+
+    const card = document.createElement('article');
+    card.className = 'feed-card ' + (i % 2 === 0 ? 'align-l' : 'align-r');
+
+    const head = document.createElement('div');
+    head.className = 'feed-head';
+    head.innerHTML = `
+      <div class="feed-avatar"><div class="feed-avatar-inner">${img ? `<img src="${img}" alt="">` : '🌸'}</div></div>
+      <div class="feed-meta">
+        <a class="feed-uname" href="membre.html?id=${encodeURIComponent(p.chibiId)}">@${escapeHtml(uname)}</a>
+        <span class="feed-time">${formatDate(p.createdAt)}</span>
+      </div>
+    `;
+    card.appendChild(head);
+
+    if(p.image){
+      const photoWrap = document.createElement('div');
+      photoWrap.className = 'feed-photo-wrap';
+      const img2 = document.createElement('img');
+      img2.className = 'feed-photo';
+      img2.src = p.image;
+      img2.alt = p.caption || '';
+      photoWrap.appendChild(img2);
+      card.appendChild(photoWrap);
+    }
+
+    if(p.caption){
+      const cap = document.createElement('p');
+      cap.className = 'feed-caption';
+      cap.textContent = p.caption;
+      card.appendChild(cap);
+    }
+
+    const likes = p.likes || {};
+    const likeCount = Object.keys(likes).length;
+    const isLiked = !!(discordUser && likes[discordUser.id]);
+
+    const actions = document.createElement('div');
+    actions.className = 'feed-actions';
+    const likeBtn = document.createElement('button');
+    likeBtn.type = 'button';
+    likeBtn.className = 'like-btn';
+    likeBtn.textContent = isLiked ? '❤️' : '🤍';
+    const countEl = document.createElement('span');
+    countEl.className = 'like-count';
+    countEl.textContent = likeCount;
+
+    likeBtn.addEventListener('click', () => toggleLike(p.chibiId, p.postId, likeBtn, countEl));
+
+    actions.appendChild(likeBtn);
+    actions.appendChild(countEl);
+    card.appendChild(actions);
+
+    feedList.appendChild(card);
+  });
+}
+
+async function toggleLike(chibiId, postId, likeBtn, countEl){
+  if(!db) return;
+  if(!discordUser){ startDiscordLogin(); return; }
+  const likeRef = db.ref('posts/' + chibiId + '/' + postId + '/likes/' + discordUser.id);
+  try{
+    const snap = await likeRef.get().catch(()=>null);
+    const alreadyLiked = !!(snap && snap.exists());
+    if(alreadyLiked){ await likeRef.remove(); }
+    else{ await likeRef.set(true); }
+
+    const allLikesSnap = await db.ref('posts/' + chibiId + '/' + postId + '/likes').get().catch(()=>null);
+    const allLikes = allLikesSnap && allLikesSnap.exists() ? allLikesSnap.val() : {};
+    countEl.textContent = Object.keys(allLikes).length;
+    likeBtn.textContent = allLikes[discordUser.id] ? '❤️' : '🤍';
+  }catch(e){ /* ignore */ }
+}
+
+async function init(){
+  await handleDiscordRedirect();
+  loadDiscordUser();
+
+  loadVideos();
+
+  if(!db){
+    feedList.innerHTML = '<div class="empty-note">⚠ la base de données n\u2019est pas accessible pour le moment.</div>';
+    return;
+  }
+  await loadFeed();
+}
+
+/* ---------- thème clair / sombre (partagé) ---------- */
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(dark){
+  document.body.classList.toggle('dark', dark);
+  themeToggle.textContent = dark ? '☀' : '🌙';
+  themeToggle.title = dark ? 'mode clair' : 'mode sombre';
+  try{ localStorage.setItem('theme', dark ? 'dark' : 'light'); }catch(e){}
+}
+themeToggle.addEventListener('click', () => {
+  applyTheme(!document.body.classList.contains('dark'));
+});
+let savedTheme = null;
+try{ savedTheme = localStorage.getItem('theme'); }catch(e){}
+applyTheme(savedTheme === 'dark');
+
+/* ---------- étoiles décoratives (partagées) ---------- */
+const sparkleChars = ['★','✦','✧','☆','✶'];
+for(let i=0;i<20;i++){
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = sparkleChars[i % sparkleChars.length];
+  s.style.left = Math.random()*100 + 'vw';
+  s.style.top = Math.random()*100 + 'vh';
+  s.style.animationDelay = (Math.random()*6) + 's';
+  s.style.animationDuration = (4 + Math.random()*5) + 's';
+  s.style.fontSize = (14 + Math.random()*24) + 'px';
+  document.body.appendChild(s);
+}
+
+init();
+</script>
+</body>
+</html>
